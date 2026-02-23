@@ -1,0 +1,32 @@
+{
+    "_meta": {
+        "_comment": "Ground truth mapping between natural language sentences and constraint rules",
+        "structure": "{}"
+    },
+    "mapping": [
+        {
+            "_id": 1,
+            "_sentences": "FEDERAL REAL PROPERTY COUNCIL 2025 GUIDANCE FOR REAL PROPERTY INVENTORY REPORTING September 2025  11 1.",
+            "_rules": "",
+            "_comment": ""
+        },
+        {
+            "_id": 2,
+            "_sentences": "Real Property Type: This data element is required for all assets.",
+            "_rules":  [["f1.Real_Property_Type is null"]],
+            "_comment": "Tuple-level DC"
+        },
+        {
+            "_id": 3,
+            "_sentences": "Real Property Type indicates the asset is one of the following categories of real property (valid codes are in parentheses): \u2022 Land (20) \u2022 Building (35): A building is a constructed asset that is enclosed with walls and a roof that provides space for agencies to perform activities or store materials as well as provides space for people to live or work in.  \u2022 Structure (40) 2.",
+            "_rules": "",
+            "_comment": ""
+        },
+        {
+            "_id": 4,
+            "_sentences": "Real Property Use: This data element is required for all assets.",
+            "_rules":  [["f1.Real_Property_Use is null"]],
+            "_comment": "Tuple-level DC"
+        }
+    ]
+}
