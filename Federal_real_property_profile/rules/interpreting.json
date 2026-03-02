@@ -1,26 +1,50 @@
 {
-    "_meta": {
-        "_comment": "Mapping from sentences to data",
-        "structure": "{}"
+  "_meta": {
+    "_comment": "Sentences interpretation from the dictionary to data",
+    "structure": "{}"
+  },
+  "mapping": [
+    {
+      "_id": 1,
+      "_sentences": [["Assets"]],
+      "_comment": "Table tuples",
+      "_interpreting": [[""]]
     },
-    "mapping": [
-        {
-            "_id": 1,
-            "_sentences": "FEDERAL REAL PROPERTY COUNCIL 2025 GUIDANCE FOR REAL PROPERTY INVENTORY REPORTING September 2025  11 1.",
-            "_rules": "",
-            "_comment": ""
-        },
-        {
-            "_id": 2,
-            "_sentences": "Real Property Type: This data element is required for all assets.",
-            "_rules":  [["f1.Real_Property_Type is null"]],
-            "_comment": "Tuple-level DC"
-        },
-        {
-            "_id": 3,
-            "_sentences": "Real Property Type indicates the asset is one of the following categories of real property (valid codes are in parentheses): \u2022 Land (20) \u2022 Building (35): A building is a constructed asset that is enclosed with walls and a roof that provides space for agencies to perform activities or store materials as well as provides space for people to live or work in.  \u2022 Structure (40) 2.",
-            "_rules": "",
-            "_comment": ""
-        }
-    ]
+    {
+      "_id": 2,
+      "_sentences": [["All non-disposed"]],
+      "_comment": "Page 15. Disposed (D): Asset has exited the federal inventory.",
+      "_interpreting":  [["f1.\"Asset Status\" != 'Disposed'"], ["f1.\"Asset Status Code\" != 'D'"]]
+    },
+    {
+      "_id": 3,
+      "_sentences": [["Office building assets"]],
+      "_comment": "Page 69. Office Building Locations: Land containing office buildings.",
+      "_interpreting": [["f1.\"Real Property Use\" IN ('Office', 'Office Building Locations')"], ["f1.\"Real Property Use Code\" = 10"]]
+    },
+    {
+      "_id": 4,
+      "_sentences": [["RTF"], ["Reduce the Footprint"]],
+      "_comment": "Page 12. Reduce the Footprint (RTF).",
+      "_interpreting": [["f1.\"Reduce the Footprint\" IN ('Y', 'N')"]]
+    },
+    {
+      "_id": 6,
+      "_sentences": [["FRPP"], ["Federal Real Property Profil"]],
+      "_comment": "Page 5. Federal Real Property Profile Management System (FRPP MS).",
+      "_interpreting": [[""]]
+    },
+    {
+      "_id": 7,
+      "_sentences": [["leased assets"]],
+      "_comment": "Page 13. Leased (L): The rights to use the real property asset.",
+      "_interpreting": [["f1.\"Legal Interest Indicator\" = 'Leased'"], ["f1.\"Legal Interest Code\" = 'L'"]]
+    },
+    {
+      "_id": ,
+      "_sentences": [[]],
+      "_comment": "",
+      "_interpreting": [[""]]
+    }
+  ]
 }
