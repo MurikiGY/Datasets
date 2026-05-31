@@ -1,7 +1,12 @@
 {
     "_meta": {
         "_comment": "Ground truth between natural language sentences and constraint rules in Constant Denial Constraint notation",
-        "structure": "{}"
+        "structure": "{
+          NULL,
+          Domain,
+          FD,
+          CFD
+        }"
     },
     "mapping": [
 
@@ -22,32 +27,33 @@
         {
             "_id": 3,
             "_sentences": [["1. Real Property Type"], ["Real Property Type indicates the asset is one of the following categories of real property (valid codes are in parentheses):"]],
-            "_comment": "Page 11",
+            "_comment": "Page 11. Domain Constraint",
             "_type": "CDC",
             "_constraint":  [["f1.\"Real Property Type\" NOT IN ('Land', 'Building', 'Structure')"]]
         },
         {
             "_id": 4,
             "_sentences": [["1. Real Property Type"], ["Real Property Type indicates the asset is one of the following categories of real property (valid codes are in parentheses):"]],
-            "_comment": "Page 11",
+            "_comment": "Page 11. Domain Constraint",
             "_type": "CDC",
             "_constraint":  [["f1.\"Real Property Type Code\" NOT IN (20, 35, 40)"]]
         },
         {
             "_id": 5,
             "_sentences": [["1. Real Property Type"], ["Real Property Type indicates the asset is one of the following categories of real property (valid codes are in parentheses):"]],
-            "_comment": "Page 11",
+            "_comment": "Page 11. Real Property Type -> Real Property Type Code",
             "_type": "FD",
             "_constraint":  [["f1.\"Real Property Type\" = f2.\"Real Property Type\""], ["f1.\"Real Property Type Code\" != f2.\"Real Property Type Code\""]]
         },
         {
             "_id": 6,
             "_sentences": [["1. Real Property Type"], ["Real Property Type indicates the asset is one of the following categories of real property (valid codes are in parentheses):"]],
-            "_comment": "Page 11",
+            "_comment": "Page 11. Real Property Type Code -> Real Property Type",
             "_type": "FD",
             "_constraint":  [["f1.\"Real Property Type\" != f2.\"Real Property Type\""], ["f1.\"Real Property Type Code\" = f2.\"Real Property Type Code\""]]
         },
 
+        Falta as CFD's de 'Land', 'Building', 'Structure' e 20, 35, 40
 
 
         {
@@ -68,7 +74,7 @@
             "_id": 9,
             "_sentences": [["2. Real Property Use"], ["Real Property Use indicates the asset’s predominant use in one of the following categories:"], 
               ["Land predominant use (25 categories)"]],
-            "_comment": "Page 11. Land codes in section G (page 69)",
+            "_comment": "Page 11. Domain. Land codes in section G (page 69)",
             "_type": "CDC",
             "_constraint":  [["f1.\"Real Property Type Code\" = 20"], 
               ["f1.\"Real Property Use\" NOT IN ('Agriculture', 'Grazing', 'Forest and Wildlife', 'Parks and Historic Sites', 'Wilderness Areas', 'Office Building Locations', 'Miscellaneous Military Land', 'Airfields', 'Harbors and Ports', 'Post Offices', 'Power Development and Distribution', 'Reclamation and Irrigation', 'Outpatient Healthcare', 'Flood Control and Navigation', 'Vacant', 'Institutional', 'Housing', 'Storage', 'Industrial', 'Space Exploration', 'Research and Development', 'Communication Systems', 'Navigation and Traffic Aids', 'All Other', 'Training Land')"]]
@@ -77,7 +83,7 @@
             "_id": 10,
             "_sentences": [["2. Real Property Use"], ["Real Property Use indicates the asset’s predominant use in one of the following categories:"]. 
               ["Building predominant use (26 categories)"]],
-            "_comment": "Page 11. Building codes in section G (page 69)",
+            "_comment": "Page 11. Domain. Building codes in section G (page 69)",
             "_type": "CDC",
             "_constraint":  [["f1.\"Real Property Type Code\" = 35"], 
               ["f1.\"Real Property Use\" NOT IN ('Office', 'Post Office', 'Outpatient Healthcare Facility', 'Hospital', 'Prisons and Detention Centers', 'School', 'Comfort Station/Restrooms', 'Data Center', 'Courthouse', 'Museum', 'Other Institutional Uses', 'Family Housing', 'Dormitories/Barracks', 'Warehouses', 'Industrial', 'Service', 'Communication Systems', 'Navigation and Traffic Aids', 'Laboratories', 'All Other', 'Border/ Inspection Station', 'Facility Security', 'Land Port of Entry', 'Aviation Security Related', 'Public Facing Facility', 'Child Care Center')"]]
@@ -86,7 +92,7 @@
             "_id": 11,
             "_sentences": [["2. Real Property Use"], ["Real Property Use indicates the asset’s predominant use in one of the following categories:"], 
               ["Structure predominant use (23 categories)"]],
-            "_comment": "Page 11. Structure codes in section G (page 69)",
+            "_comment": "Page 11. Domain. Structure codes in section G (page 69)",
             "_type": "CDC",
             "_constraint":  [["f1.\"Real Property Type Code\" = 40"], 
               ["f1.\"Real Property Use\" NOT IN ('Airfield Pavements', 'Harbors and Ports', 'Power Development and Distribution', 'Reclamation and Irrigation', 'Flood Control and Navigation', 'Museum', 'Storage (other than buildings)', 'Industrial (other than buildings)', 'Service (other than buildings)', 'Space Exploration Structures', 'Parking Structures', 'Research and Development (other than laboratories)', 'Utility Systems', 'Communication Systems', 'Navigation and Traffic Aids (other than buildings)', 'Recreational (other than buildings)', 'Roads and Bridges', 'Railroads', 'Monuments and Memorials', 'Miscellaneous Military Facilities', 'All Other', 'Weapons Ranges', 'Renewable Energy System')"]]
@@ -147,6 +153,7 @@
               ["f1.\"Asset Status\" != 'Disposed'"], ["f1.\"Asset Status Code\" != 'D'"],
               ["f1.\"Real Property Use\" IN ('Office', 'Office Building Locations')"], ["f1.\"Real Property Use Code\" = 10"]]
         },
+        Essa regra tem que ser Field Office = 'D' OR Real Property Use Code != 10, mas em denial constraint fica AND
         {
             "_id": 18,
             "_sentences": [["3. Field Office"], ["This data element is required for all non-disposed office building assets."], 
@@ -170,33 +177,95 @@
         {
             "_id": 20,
             "_sentences": [["3. Field Office"], ["Valid codes in parenthesis."]],
-            "_comment": "Page 11",
+            "_comment": "Page 11. Domain",
             "_type": "CDC",
             "_constraint":  [["f1.\"Field Office\" NOT IN ('Headquarters', 'Headquarters Function', 'Field Office')"]]
         },
         {
             "_id": 21,
             "_sentences": [["3. Field Office"], ["Valid codes in parenthesis."]],
-            "_comment": "Page 11",
+            "_comment": "Page 11. Domain",
             "_type": "CDC",
             "_constraint":  [["f1.\"Field Office Code\" NOT IN ('HQ', 'HF', 'FO')"]]
         },
 
         {
             "_id": 22,
-            "_sentences": [["3. Field Office"], ["Valid codes in parenthesis."]],
+            "_sentences": [["3. Field Office"]],
             "_comment": "Page 11. Field Office -> Field Office Code",
             "_type": "FD",
             "_constraint":  [["f1.\"Field Office\" = f2.\"Field Office\""], ["f1.\"Field Office Code\" != f2.\"Field Office Code\""]]
         },
         {
             "_id": 23,
-            "_sentences": [["3. Field Office"], ["Valid codes in parenthesis."]],
+            "_sentences": [["3. Field Office"]],
             "_comment": "Page 11. Field Office Code -> Field Office",
             "_type": "FD",
             "_constraint":  [["f1.\"Field Office\" != f2.\"Field Office\""], ["f1.\"Field Office Code\" = f2.\"Field Office Code\""]]
         },
 
+        {
+            "_id": 24,
+            "_sentences": [["3. Field Office"]],
+            "_comment": "Page 11. Field Office -> Field Office Code",
+            "_type": "CFD",
+            "_constraint":  [["f1.\"Field Office\" != f2.\"Field Office\""], ["f1.\"Field Office Code\" = f2.\"Field Office Code\""]]
+        },
+
+
+
+        {
+            "_id": 24,
+            "_sentences": [["4. Field Office Collocation"], ["This data element is required for all non-disposed office building assets where the field office data element is reported as field office (FO)."]],
+            "_comment": "Page 12",
+            "_type": "CDC",
+            "_constraint":  [["f1.\"Field Office Colocation\" IS NULL"], 
+              ["f1.\"Field Office\""]
+              ["f1.\"Asset Status\" != 'Disposed'"], ["f1.\"Asset Status Code\" != 'D'"],
+              ["f1.\"Real Property Use\" IN ('Office', 'Office Building Locations')"], ["f1.\"Real Property Use Code\" = 10"]]
+        },
+        {
+            "_id": 25,
+            "_sentences": [["4. Field Office Collocation"], ["This data element is required for all non-disposed office building assets where the field office data element is reported as field office (FO)."]],
+            "_comment": "Page 12",
+            "_type": "CDC",
+            "_constraint":  [["f1.\"Field Office Colocation Code\" IS NULL"], 
+              ["f1.\"Asset Status\" != 'Disposed'"], ["f1.\"Asset Status Code\" != 'D'"],
+              ["f1.\"Real Property Use\" IN ('Office', 'Office Building Locations')"], ["f1.\"Real Property Use Code\" = 10"]]
+        },
+        {
+            "_id": 26,
+            "_sentences": [["4. Field Office Collocation"], ["It is not to be reported for office building assets identified as Headquarters (HQ) or Headquarters Function (HF), other building use assets, structure assets, or land assets."]],
+            "_comment": "Page 12",
+            "_type": "CDC",
+            "_constraint":  [["f1.\"Field Office Colocation\" IS NOT NULL"], 
+              ["f1.\"Asset Status\" != 'Disposed'"], ["f1.\"Asset Status Code\" != 'D'"],
+              ["f1.\"Real Property Use\" IN ('Office', 'Office Building Locations')"], ["f1.\"Real Property Use Code\" = 10"]]
+        },
+        {
+            "_id": 27,
+            "_sentences": [["4. Field Office Collocation"], ["It is not to be reported for office building assets identified as Headquarters (HQ) or Headquarters Function (HF), other building use assets, structure assets, or land assets."]],
+            "_comment": "Page 12",
+            "_type": "CDC",
+            "_constraint":  [["f1.\"Field Office Colocation Code\" IS NOT NULL"], 
+              ["f1.\"Asset Status\" != 'Disposed'"], ["f1.\"Asset Status Code\" != 'D'"],
+              ["f1.\"Real Property Use\" IN ('Office', 'Office Building Locations')"], ["f1.\"Real Property Use Code\" = 10"]]
+        },
+
+        {
+            "_id": 24,
+            "_sentences": [["4. Field Office Collocation"]],
+            "_comment": "Page 12",
+            "_type": "",
+            "_constraint":  [[""]]
+        },
+        {
+            "_id": 24,
+            "_sentences": [["4. Field Office Collocation"]],
+            "_comment": "Page 12",
+            "_type": "",
+            "_constraint":  [[""]]
+        },
 
 
         {
