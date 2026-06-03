@@ -8,7 +8,7 @@ import random
 url = "https://dados.ufrn.br/dataset/5307e9aa-0946-4c0b-9d55-4f4f61aa8542/resource/642af33a-7c9d-41c4-8077-804830f83f09/download/discentes-egressos-"
 data_file = "egressos"
 data_dir = "./data"
-years = list(range(2006, 2026))
+years = list(range(2010, 2012))
 
 session = requests.Session()
 session.headers.update({
@@ -23,7 +23,7 @@ if not os.path.exists(data_dir):
     os.makedirs(data_dir)
 
 for year in years:
-    print(f"Downloading {data_file}_{year}.csv")
+    print(f"Downloading {data_file}_{year}.csv: {url}{year}.csv")
     response = session.get(url+f"{year}.csv")
 
     if response.status_code == 200:
